@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100..900&display=swap');
+
+:root {
+    /* Primary Colors */
+    --color-teal: #33d6c0;
+    --color-bright-blue: #316eff;
+    --color-purple: #7f57ff;
+
+    /* Secondary Colors */
+    --color-light-blue: #b3e5ff;
+    --color-lavender: #d3c4ff;
+
+    /* Neutral Colors */
+    --color-white: #ffffff;
+    --color-light-gray: #f5f5f5;
+    --color-dark-gray: #3a3a3a;
+
+    /* Accent Colors */
+    --color-soft-green: #a7f3d0;
+    --color-warm-pink: #f8b4d9;
+
+    /* Background Colors */
+    --background-light: var(--color-white);
+    --background-gray: var(--color-light-gray);
+    --background-accent: var(--color-light-blue);
+
+    /* Text Colors */
+    --text-primary: var(--color-dark-gray);
+    --text-secondary: var(--color-bright-blue);
+    --text-highlight: var(--color-purple);
+
+    /* Border Colors */
+    --border-light: var(--color-light-gray);
+    --border-accent: var(--color-teal);
+
+    /* Font Families */
+    --font-primary: 'Poppins', sans-serif; /* Headings */
+    --font-secondary: 'Inter', sans-serif; /* Body Text */
+    --font-accent: 'Roboto Slab', serif; /* Highlights or Quotes */
+
+    /* Font Sizes */
+    --font-size-heading: clamp(2rem, 5vw, 3rem); /* Adjusts between 2rem and 3rem */
+    --font-size-subheading: clamp(1.5rem, 4vw, 2rem); /* Adjusts between 1.5rem and 2rem */
+    --font-size-body: clamp(1rem, 2.5vw, 1.25rem); /* Adjusts between 1rem and 1.25rem */
+    --font-size-small: clamp(0.875rem, 2vw, 1rem); /* Adjusts between 0.875rem and 1rem */
+
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-bold: 700;
+
+    /* Line Heights */
+    --line-height-heading: 1.4; /* For headings */
+    --line-height-body: 1.6; /* For body text */
+
+    /* Letter Spacing */
+    --letter-spacing-heading: 0.02em; /* Slightly spaced for headings */
+    --letter-spacing-body: normal;
+}
