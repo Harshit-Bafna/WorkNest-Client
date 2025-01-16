@@ -2,6 +2,18 @@ import { FC, useState } from 'react'
 import AuthBody from '../Components/AuthBody'
 import Form from './Form'
 import ErrorMessage from '../../../components/ErrorMessage'
+import LoginImage from '../../../assets/auth/loginPage.svg'
+
+const authBody = {
+    type: 'Sign In',
+    message: 'Get Access to your account',
+}
+
+const leftContainer = {
+    header: 'Good to Have You Back!',
+    description: 'Sign in to track your tasks, collaborate with your team, and stay ahead of your goals ...',
+    image: LoginImage,
+}
 
 const Index: FC = () => {
     const [userError, setUserError] = useState<string | null>(null)
@@ -22,6 +34,8 @@ const Index: FC = () => {
             <AuthBody
                 CustomComponent={Form}
                 onError={handleError}
+                leftContainer={leftContainer}
+                authBody={authBody}
             />
         </div>
     )

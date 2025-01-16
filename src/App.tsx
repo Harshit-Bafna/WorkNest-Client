@@ -1,7 +1,8 @@
 import './App.css'
+import Index from './pages/Auth/SignIn/Index'
 
 function App() {
-    return <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    return <Index/>
 }
 
 export default App
