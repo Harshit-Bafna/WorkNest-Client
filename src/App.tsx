@@ -1,18 +1,3 @@
-// import './App.css'
-// import ErrorMessage from './components/ErrorMessage'
-// import RegisterIndividual from './pages/Auth/SignUp/RegisterIndividual'
-
-// function App() {
-//     return (
-//         <>
-//             <ErrorMessage errorMessage='err'/>
-//             <RegisterIndividual />
-//         </>
-//     )
-// }
-
-// export default App
-
 import './App.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from './store/store'
