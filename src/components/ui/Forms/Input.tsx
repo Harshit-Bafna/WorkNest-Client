@@ -26,6 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, leftI
                 className={cn(
                     'flex w-full rounded-md bg-transparent outline outline-1 outline-dark-grey h-9 px-3 text-sm placeholder:text-light-dark-grey placeholder:opacity-50 placeholder:font-medium focus:outline-none focus:ring-2 focus:ring-gray-muted focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
                     leftIcon && 'pl-10',
+                    type === 'file' && 'file:bg-transparent file:border-0 ver file:h-9',
                     className
                 )}
                 ref={ref}

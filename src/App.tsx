@@ -1,8 +1,8 @@
 import './App.css'
-import Registration from './pages/Auth/SignUp/RegisterIndividual'
+import RegisterOrganization from './pages/Auth/SignUp/RegisterOrganization'
 
 function App() {
-    return <Registration />
+    return <RegisterOrganization     />
 }
 
 export default App
