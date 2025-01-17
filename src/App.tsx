@@ -1,8 +1,8 @@
 import './App.css'
-import Index from './pages/Auth/SignIn/Index'
+import Registration from './pages/Auth/SignUp/RegisterIndividual'
 
 function App() {
-    return <Index/>
+    return <Registration />
 }
 
 export default App
