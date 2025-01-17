@@ -4,15 +4,13 @@ import { Label } from '../../../components/ui/Forms/Label'
 import { Button } from '../../../components/ui/Button'
 import { useRef, useState, useEffect, FormEvent, FC } from 'react'
 import { emailRegex, passwordRegex } from '../../../utils/constants/regex'
+import { useDispatch } from 'react-redux'
+import { setError } from '../../../store/slices/errorSlice'
 
-interface CustomComponentProps {
-    // eslint-disable-next-line no-unused-vars
-    onError: (error: string | null) => void
-}
+const FormIndividual: FC = () => {
+    const dispatch = useDispatch()
 
-const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
     const userRef = useRef<HTMLInputElement | null>(null)
-    const errRef = useRef<HTMLDivElement | null>(null)
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -32,62 +30,40 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
 
         if (!email) {
             const errorMessage = 'Email is required.'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         } else if (!name) {
             const errorMessage = 'Name is required.'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         } else if (!password) {
             const errorMessage = 'Password is required.'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         } else if (!cPassword) {
             const errorMessage = 'Confirm password is required.'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         }
 
         if (!emailRegex.test(email)) {
             const errorMessage = 'Invalid email address'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         }
 
         if (!passwordRegex.test(password)) {
             const errorMessage = 'Password too weak: (password must have a lowercase, uppercase, number and a special character)'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         }
 
         if (!(password === cPassword)) {
             const errorMessage = 'Password and confirm password does not match'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         }
 
-        onError(null)
         setSuccess(true)
     }
 

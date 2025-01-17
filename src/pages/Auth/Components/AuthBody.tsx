@@ -3,10 +3,7 @@ import LeftContainer from './LeftContainer'
 import Logo from '../../../components/Logo/Logo'
 
 interface AuthBodyProps {
-    // eslint-disable-next-line no-unused-vars
-    CustomComponent?: React.ComponentType<{ onError: (error: string | null) => void }>
-    // eslint-disable-next-line no-unused-vars
-    onError: (error: string | null) => void
+    CustomComponent?: React.ComponentType
     leftContainer: {
         header: string
         description: string
@@ -18,7 +15,7 @@ interface AuthBodyProps {
     }
 }
 
-const AuthBody: React.FC<AuthBodyProps> = ({ CustomComponent, onError, leftContainer, authBody }) => {
+const AuthBody: React.FC<AuthBodyProps> = ({ CustomComponent, leftContainer, authBody }) => {
     return (
         <div className="flex flex-col md:flex-row container h-full max-w-[1200px] w-fit bg-white p-5 rounded-lg drop-shadow-text-shadow shrink">
             <LeftContainer leftContainer={leftContainer} />
@@ -29,7 +26,7 @@ const AuthBody: React.FC<AuthBodyProps> = ({ CustomComponent, onError, leftConta
                 />
                 <p className="font-inter text-2xl font-semibold">{authBody.type}</p>
                 <p className="text-light-dark-grey font-roboto-slab text-center">{authBody.message}</p>
-                {CustomComponent && <CustomComponent onError={onError} />}
+                {CustomComponent && <CustomComponent />}
             </div>
         </div>
     )

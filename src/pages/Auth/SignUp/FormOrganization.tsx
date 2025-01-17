@@ -3,18 +3,16 @@ import { User, KeyRound, Mail, Building, BookUser, Hexagon, Link, MoveRight } fr
 import { Label } from '../../../components/ui/Forms/Label'
 import { Button } from '../../../components/ui/Button'
 import { useRef, useState, useEffect, FormEvent, FC } from 'react'
-import { emailRegex } from '../../../utils/constants/regex'
+import { emailRegex, passwordRegex } from '../../../utils/constants/regex'
 import { Checkbox } from '../../../components/ui/Forms/Checkbox'
 import { cn } from '../../../utils/helper/syncHelper'
+import { useDispatch } from 'react-redux'
+import { setError } from '../../../store/slices/errorSlice'
 
-interface CustomComponentProps {
-    // eslint-disable-next-line no-unused-vars
-    onError: (error: string | null) => void
-}
+const FormIndividual: FC = () => {
+    const dispatch = useDispatch()
 
-const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
     const userRef = useRef<HTMLInputElement | null>(null)
-    const errRef = useRef<HTMLDivElement | null>(null)
 
     const [organizationName, setOrganizationName] = useState('')
     const [registrationNumber, setRegistrationNumber] = useState('')
@@ -34,28 +32,58 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
         }
     }, [])
 
+    const validateAndUpdateFormIndex = (formIndex: number) => {
+        if (!organizationName) {
+            const errorMessage = 'Organization name is required.'
+            dispatch(setError(errorMessage))
+            return
+        } else if (!registrationNumber) {
+            const errorMessage = 'Registration number is required.'
+            dispatch(setError(errorMessage))
+            return
+        }
+        setCurrentForm(formIndex)
+    }
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!email || !password) {
-            const errorMessage = 'Both email and password are required.'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+        if (!email) {
+            const errorMessage = 'Email is required.'
+            dispatch(setError(errorMessage))
+            return
+        } else if (!password) {
+            const errorMessage = 'Password is required.'
+            dispatch(setError(errorMessage))
+            return
+        } else if (!cPassword) {
+            const errorMessage = 'Confirm password is required.'
+            dispatch(setError(errorMessage))
+            return
+        } else if (!name) {
+            const errorMessage = 'Admin name is required.'
+            dispatch(setError(errorMessage))
             return
         }
 
         if (!emailRegex.test(email)) {
             const errorMessage = 'Invalid email address'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         }
 
-        onError(null)
+        if (!passwordRegex.test(password)) {
+            const errorMessage = 'Password too weak: (password must have a lowercase, uppercase, number and a special character)'
+            dispatch(setError(errorMessage))
+            return
+        }
+
+        if (!(password === cPassword)) {
+            const errorMessage = 'Password and confirm password does not match'
+            dispatch(setError(errorMessage))
+            return
+        }
+
         setSuccess(true)
     }
 
@@ -68,8 +96,7 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
                     className={cn(
                         'transition-transform duration-500 ease-in-out',
                         currentForm === 1 ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 absolute'
-                    )}
-                >
+                    )}>
                     <div className="form-field">
                         <Label
                             htmlFor="organization-name"
@@ -142,20 +169,16 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
                     <Button
                         type="button"
                         className="mt-2"
-                        onClick={() => setCurrentForm(2)}
+                        onClick={() => validateAndUpdateFormIndex(2)}
                         size={'lg'}>
-                        Next{' '}
-                        <MoveRight
-                            className="w-5 ml-3"
-                        />
+                        Next <MoveRight className="w-5 ml-3" />
                     </Button>
                 </div>
                 <div
                     className={cn(
                         'transition-transform duration-500 ease-in-out',
                         currentForm === 2 ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 absolute'
-                    )}
-                >
+                    )}>
                     <div className="form-field">
                         <Label
                             htmlFor="name"

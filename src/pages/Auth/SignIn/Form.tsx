@@ -4,15 +4,13 @@ import { Label } from '../../../components/ui/Forms/Label'
 import { Button } from '../../../components/ui/Button'
 import { useRef, useState, useEffect, FormEvent, FC } from 'react'
 import { emailRegex } from '../../../utils/constants/regex'
+import { useDispatch } from 'react-redux'
+import { setError } from '../../../store/slices/errorSlice'
 
-interface CustomComponentProps {
-    // eslint-disable-next-line no-unused-vars
-    onError: (error: string | null) => void
-}
+const Form: FC = () => {
+    const dispatch = useDispatch()
 
-const Form: FC<CustomComponentProps> = ({ onError }) => {
     const emailRef = useRef<HTMLInputElement | null>(null)
-    const errRef = useRef<HTMLDivElement | null>(null)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -30,23 +28,16 @@ const Form: FC<CustomComponentProps> = ({ onError }) => {
 
         if (!email || !password) {
             const errorMessage = 'Both email and password are required.'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         }
 
         if (!emailRegex.test(email)) {
             const errorMessage = 'Invalid email address'
-            onError(errorMessage)
-            if (errRef.current) {
-                errRef.current.focus()
-            }
+            dispatch(setError(errorMessage))
             return
         }
 
-        onError(null)
         setSuccess(true)
     }
 

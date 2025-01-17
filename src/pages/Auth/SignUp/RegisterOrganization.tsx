@@ -1,7 +1,6 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import AuthBody from '../Components/AuthBody'
 import FormOrganization from './FormOrganization'
-import ErrorMessage from '../../../components/ErrorMessage'
 import RegisterTeamImage from '../../../assets/auth/register-team.svg'
 
 const authBody = {
@@ -18,24 +17,10 @@ const leftContainer = {
 }
 
 const RegisterOrganization: FC = () => {
-    const [userError, setUserError] = useState<string | null>(null)
-
-    const handleError = (error: string | null) => {
-        setUserError(error)
-
-        if (error) {
-            setTimeout(() => {
-                setUserError(null)
-            }, 5000)
-        }
-    }
-
     return (
         <div className="bg-off-white min-h-screen min-w-screen w-full flex justify-center items-center p-10 transition-all">
-            {userError && <ErrorMessage errorMessage={userError} />}
             <AuthBody
                 CustomComponent={FormOrganization}
-                onError={handleError}
                 leftContainer={leftContainer}
                 authBody={authBody}
             />
