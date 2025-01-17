@@ -3,7 +3,7 @@ import { User, KeyRound, Mail } from 'lucide-react'
 import { Label } from '../../../components/ui/Forms/Label'
 import { Button } from '../../../components/ui/Button'
 import { useRef, useState, useEffect, FormEvent, FC } from 'react'
-import { emailRegex } from '../../../utils/constants/regex'
+import { emailRegex, passwordRegex } from '../../../utils/constants/regex'
 
 interface CustomComponentProps {
     // eslint-disable-next-line no-unused-vars
@@ -30,8 +30,29 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!email || !password) {
-            const errorMessage = 'Both email and password are required.'
+        if (!email) {
+            const errorMessage = 'Email is required.'
+            onError(errorMessage)
+            if (errRef.current) {
+                errRef.current.focus()
+            }
+            return
+        } else if (!name) {
+            const errorMessage = 'Name is required.'
+            onError(errorMessage)
+            if (errRef.current) {
+                errRef.current.focus()
+            }
+            return
+        } else if (!password) {
+            const errorMessage = 'Password is required.'
+            onError(errorMessage)
+            if (errRef.current) {
+                errRef.current.focus()
+            }
+            return
+        } else if (!cPassword) {
+            const errorMessage = 'Confirm password is required.'
             onError(errorMessage)
             if (errRef.current) {
                 errRef.current.focus()
@@ -41,6 +62,24 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
 
         if (!emailRegex.test(email)) {
             const errorMessage = 'Invalid email address'
+            onError(errorMessage)
+            if (errRef.current) {
+                errRef.current.focus()
+            }
+            return
+        }
+
+        if (!passwordRegex.test(password)) {
+            const errorMessage = 'Password too weak: (password must have a lowercase, uppercase, number and a special character)'
+            onError(errorMessage)
+            if (errRef.current) {
+                errRef.current.focus()
+            }
+            return
+        }
+
+        if (!(password === cPassword)) {
+            const errorMessage = 'Password and confirm password does not match'
             onError(errorMessage)
             if (errRef.current) {
                 errRef.current.focus()
@@ -99,7 +138,6 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
                     <Input
                         type="password"
                         id="password"
-                        autoComplete="off"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                         placeholder="password"
@@ -115,7 +153,6 @@ const FormIndividual: FC<CustomComponentProps> = ({ onError }) => {
                     <Input
                         type="password"
                         id="cPassword"
-                        autoComplete="off"
                         onChange={(e) => setCPassword(e.target.value)}
                         value={cPassword}
                         placeholder="confirm password"
