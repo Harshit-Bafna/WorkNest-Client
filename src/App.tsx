@@ -5,7 +5,7 @@ import { clearError } from './store/slices/errorSlice'
 import ErrorMessage from './components/ErrorMessage'
 import { useEffect } from 'react'
 import Loader from './components/Loader/Loader'
-import RegisterOrganization from './pages/Auth/SignUp/RegisterOrganization'
+import Index from './pages/Auth/SignIn/Index'
 
 function App() {
     const { errorMessage, isError } = useSelector((state: RootState) => state.error)
@@ -26,7 +26,7 @@ function App() {
         <>
             {isError && errorMessage && <ErrorMessage errorMessage={errorMessage} />}
             {isLoading && <Loader />}
-            <RegisterOrganization />
+            <Index />
         </>
     )
 }

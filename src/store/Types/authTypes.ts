@@ -16,3 +16,18 @@ export interface RegisterOrganizationPayload {
     password: string
     conscent: boolean
 }
+
+export interface LoginPayload {
+    emailAddress: string
+    password: string
+}
+
+interface AuthState {
+    isLoggedIn: boolean
+    data: unknown
+}
+
+export const initialState: AuthState = {
+    isLoggedIn: false,
+    data: null,
+}

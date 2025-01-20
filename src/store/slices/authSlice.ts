@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { RegisterOrganizationPayload, RegisterUserPayload } from '../Types/authTypes'
+import { initialState, LoginPayload, RegisterOrganizationPayload, RegisterUserPayload } from '../Types/authTypes'
 import config from '../../data/config'
 import { setError } from './errorSlice'
 import { startLoading, stopLoading } from './loaderSlice'
@@ -62,10 +62,49 @@ export const registerOrganization = createAsyncThunk('organisation/create', asyn
     }
 })
 
+export const userLogin = createAsyncThunk('auth/login', async (loginPayload: LoginPayload, thunkAPI) => {
+    try {
+        thunkAPI.dispatch(startLoading())
+
+        const { data }: { data: ApiResponse } = await axios.post(`${serverURL}/${authURL}/login`, loginPayload)
+
+        if (!data.success) {
+            thunkAPI.dispatch(setError(data.message))
+            return thunkAPI.rejectWithValue(data.message)
+        }
+
+        return data
+    } catch (error) {
+        const errorMessage =
+            axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : error instanceof Error
+                  ? error.message
+                  : 'Something went wrong'
+        thunkAPI.dispatch(setError(errorMessage))
+        return thunkAPI.rejectWithValue(errorMessage)
+    } finally {
+        thunkAPI.dispatch(stopLoading())
+    }
+})
+
 const authSlice = createSlice({
     name: 'auth',
-    initialState: null,
+    initialState: initialState,
     reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(userLogin.pending, (state) => {
+                state.isLoggedIn = false
+            })
+            .addCase(userLogin.fulfilled, (state, action) => {
+                state.isLoggedIn = true
+                state.data = action.payload.data
+            })
+            .addCase(userLogin.rejected, (state) => {
+                state.isLoggedIn = false
+            })
+    },
 })
 
 export default authSlice.reducer

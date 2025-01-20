@@ -6,9 +6,12 @@ import { useRef, useState, useEffect, FormEvent, FC } from 'react'
 import { emailRegex } from '../../../utils/constants/regex'
 import { useDispatch } from 'react-redux'
 import { setError } from '../../../store/slices/errorSlice'
+import { AppDispatch } from '../../../store/store'
+import { userLogin } from '../../../store/slices/authSlice'
+import { LoginPayload } from '../../../store/Types/authTypes'
 
 const Form: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const emailRef = useRef<HTMLInputElement | null>(null)
 
@@ -38,6 +41,12 @@ const Form: FC = () => {
             return
         }
 
+        const loginCredentials: LoginPayload = {
+            emailAddress: email,
+            password: password,
+        }
+
+        dispatch(userLogin(loginCredentials))
         setSuccess(true)
     }
 
