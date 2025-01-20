@@ -9,6 +9,7 @@ import { setError } from '../../../store/slices/errorSlice'
 import { RegisterUserPayload } from '../../../store/Types/authTypes'
 import { registerUser } from '../../../store/slices/authSlice'
 import { AppDispatch } from '../../../store/store'
+import { Checkbox } from '../../../components/ui/Forms/Checkbox'
 
 const FormIndividual: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -19,6 +20,7 @@ const FormIndividual: FC = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [cPassword, setCPassword] = useState('')
+    const [conscent, setConsent] = useState(false)
 
     const [, setSuccess] = useState(false)
 
@@ -67,12 +69,18 @@ const FormIndividual: FC = () => {
             return
         }
 
+        if (!conscent) {
+            const errorMessage = 'Please agree to terms and conditions'
+            dispatch(setError(errorMessage))
+            return
+        }
+
         const registerUserPayload: RegisterUserPayload = {
             name: name,
             emailAddress: email,
             password: password,
-            conscent: true,
-            role: 'Admin'
+            conscent: conscent,
+            role: 'Admin',
         }
 
         dispatch(registerUser(registerUserPayload))
@@ -147,16 +155,13 @@ const FormIndividual: FC = () => {
                         leftIcon={<KeyRound />}
                     />
                 </div>
-                <div className="forgot-password mt-2 text-right">
-                    <a
-                        href="/"
-                        className="text-bright-blue font-medium text-sm">
-                        Forgot password?
-                    </a>
+                <div className="flex justify-start items-center forgot-password mt-8 text-left">
+                    <Checkbox onCheckedChange={(checked) => setConsent(!!checked)} />
+                    <p className="font-normal font-inter text-sm ml-2">Agree to terms and condition</p>
                 </div>
                 <Button
                     type="submit"
-                    className="mt-8"
+                    className="mt-2"
                     size={'lg'}>
                     Sign In
                 </Button>
