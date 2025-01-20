@@ -6,9 +6,12 @@ import { useRef, useState, useEffect, FormEvent, FC } from 'react'
 import { emailRegex, passwordRegex } from '../../../utils/constants/regex'
 import { useDispatch } from 'react-redux'
 import { setError } from '../../../store/slices/errorSlice'
+import { RegisterUserPayload } from '../../../store/Types/authTypes'
+import { registerUser } from '../../../store/slices/authSlice'
+import { AppDispatch } from '../../../store/store'
 
 const FormIndividual: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const userRef = useRef<HTMLInputElement | null>(null)
 
@@ -64,6 +67,15 @@ const FormIndividual: FC = () => {
             return
         }
 
+        const registerUserPayload: RegisterUserPayload = {
+            name: name,
+            emailAddress: email,
+            password: password,
+            conscent: true,
+            role: 'Admin'
+        }
+
+        dispatch(registerUser(registerUserPayload))
         setSuccess(true)
     }
 
