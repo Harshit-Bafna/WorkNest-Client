@@ -5,9 +5,11 @@ import { clearError } from './store/slices/errorSlice'
 import ErrorMessage from './components/ErrorMessage'
 import RegisterIndividual from './pages/Auth/SignUp/RegisterIndividual'
 import { useEffect } from 'react'
+import Loader from './components/Loader/Loader'
 
 function App() {
     const { errorMessage, isError } = useSelector((state: RootState) => state.error)
+    const { isLoading } = useSelector((state: RootState) => state.loader)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -23,6 +25,7 @@ function App() {
     return (
         <>
             {isError && errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+            {isLoading && <Loader />}
             <RegisterIndividual />
         </>
     )
