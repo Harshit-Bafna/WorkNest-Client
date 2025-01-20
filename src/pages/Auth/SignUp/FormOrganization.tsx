@@ -8,9 +8,12 @@ import { Checkbox } from '../../../components/ui/Forms/Checkbox'
 import { cn } from '../../../utils/helper/syncHelper'
 import { useDispatch } from 'react-redux'
 import { setError } from '../../../store/slices/errorSlice'
+import { AppDispatch } from '../../../store/store'
+import { RegisterOrganizationPayload } from '../../../store/Types/authTypes'
+import { registerOrganization } from '../../../store/slices/authSlice'
 
 const FormIndividual: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const userRef = useRef<HTMLInputElement | null>(null)
 
@@ -22,6 +25,7 @@ const FormIndividual: FC = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [cPassword, setCPassword] = useState('')
+    const [conscent, setConsent] = useState(false)
     const [currentForm, setCurrentForm] = useState(1)
 
     const [, setSuccess] = useState(false)
@@ -84,6 +88,24 @@ const FormIndividual: FC = () => {
             return
         }
 
+        if (!conscent) {
+            const errorMessage = 'Please agree to terms and conditions'
+            dispatch(setError(errorMessage))
+            return
+        }
+
+        const organizationPayload: RegisterOrganizationPayload = {
+            name: organizationName,
+            emailAddress: email,
+            logo: logo,
+            website: websiteUrl,
+            registrationNumber: registrationNumber,
+            adminName: name,
+            password: password,
+            conscent: conscent,
+        }
+
+        dispatch(registerOrganization(organizationPayload))
         setSuccess(true)
     }
 
@@ -162,13 +184,9 @@ const FormIndividual: FC = () => {
                             leftIcon={<Link />}
                         />
                     </div>
-                    <div className="flex justify-start items-center forgot-password mt-8 text-left">
-                        <Checkbox />
-                        <p className="font-normal font-inter text-sm ml-2">Agree to terms and condition</p>
-                    </div>
                     <Button
                         type="button"
-                        className="mt-2"
+                        className="mt-12"
                         onClick={() => validateAndUpdateFormIndex(2)}
                         size={'lg'}>
                         Next <MoveRight className="w-5 ml-3" />
@@ -244,7 +262,7 @@ const FormIndividual: FC = () => {
                         />
                     </div>
                     <div className="flex justify-start items-center forgot-password mt-8 text-left">
-                        <Checkbox />
+                        <Checkbox onCheckedChange={(checked) => setConsent(!!checked)} />
                         <p className="font-normal font-inter text-sm ml-2">Agree to terms and condition</p>
                     </div>
                     <Button

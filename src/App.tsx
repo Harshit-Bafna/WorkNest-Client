@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from './store/store'
 import { clearError } from './store/slices/errorSlice'
 import ErrorMessage from './components/ErrorMessage'
-import RegisterIndividual from './pages/Auth/SignUp/RegisterIndividual'
 import { useEffect } from 'react'
 import Loader from './components/Loader/Loader'
+import RegisterOrganization from './pages/Auth/SignUp/RegisterOrganization'
 
 function App() {
     const { errorMessage, isError } = useSelector((state: RootState) => state.error)
@@ -26,7 +26,7 @@ function App() {
         <>
             {isError && errorMessage && <ErrorMessage errorMessage={errorMessage} />}
             {isLoading && <Loader />}
-            <RegisterIndividual />
+            <RegisterOrganization />
         </>
     )
 }
