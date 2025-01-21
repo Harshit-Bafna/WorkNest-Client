@@ -22,6 +22,10 @@ export interface LoginPayload {
     password: string
 }
 
+export interface ForgetPasswordPayload {
+    emailAddress: string
+}
+
 interface AuthState {
     isLoggedIn: boolean
     data: unknown

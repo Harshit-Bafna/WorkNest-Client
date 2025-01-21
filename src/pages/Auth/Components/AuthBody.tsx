@@ -25,7 +25,7 @@ const AuthBody: React.FC<AuthBodyProps> = ({ CustomComponent, leftContainer, aut
                     text={'hidden'}
                 />
                 <p className="font-inter text-2xl font-semibold">{authBody.type}</p>
-                <p className="text-light-dark-grey font-roboto-slab text-center">{authBody.message}</p>
+                <p className="text-light-dark-grey font-roboto-slab text-center max-w-72 mt-2">{authBody.message}</p>
                 {CustomComponent && <CustomComponent />}
             </div>
         </div>

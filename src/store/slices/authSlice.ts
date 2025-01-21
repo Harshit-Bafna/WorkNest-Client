@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { initialState, LoginPayload, RegisterOrganizationPayload, RegisterUserPayload } from '../Types/authTypes'
+import { ForgetPasswordPayload, initialState, LoginPayload, RegisterOrganizationPayload, RegisterUserPayload } from '../Types/authTypes'
 import config from '../../data/config'
 import { setError } from './errorSlice'
 import { startLoading, stopLoading } from './loaderSlice'
@@ -66,7 +66,33 @@ export const userLogin = createAsyncThunk('auth/login', async (loginPayload: Log
     try {
         thunkAPI.dispatch(startLoading())
 
-        const { data }: { data: ApiResponse } = await axios.post(`${serverURL}/${authURL}/login`, loginPayload)
+        const { data }: { data: ApiResponse } = await axios.post(`${serverURL}/${authURL}/login`, loginPayload, { withCredentials: true })
+
+        if (!data.success) {
+            thunkAPI.dispatch(setError(data.message))
+            return thunkAPI.rejectWithValue(data.message)
+        }
+
+        return data
+    } catch (error) {
+        const errorMessage =
+            axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : error instanceof Error
+                  ? error.message
+                  : 'Something went wrong'
+        thunkAPI.dispatch(setError(errorMessage))
+        return thunkAPI.rejectWithValue(errorMessage)
+    } finally {
+        thunkAPI.dispatch(stopLoading())
+    }
+})
+
+export const forgetPassword = createAsyncThunk('auth/forgot-password', async (forgetPasswordPayload: ForgetPasswordPayload, thunkAPI) => {
+    try {
+        thunkAPI.dispatch(startLoading())
+
+        const { data }: { data: ApiResponse } = await axios.post(`${serverURL}/${authURL}/forgot-password`, forgetPasswordPayload)
 
         if (!data.success) {
             thunkAPI.dispatch(setError(data.message))
