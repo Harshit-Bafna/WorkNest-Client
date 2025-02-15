@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { cn } from '../../../utils/helper/syncHelper'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     leftIcon?: React.ReactNode
+    loading?: boolean
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, leftIcon, type = 'text', ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, leftIcon, loading, type = 'text', ...props }, ref) => {
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false)
 
     const togglePasswordVisibility = () => {
@@ -42,6 +43,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, leftI
                     onKeyPress={handleKeyPress}
                     aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}>
                     {isPasswordVisible ? <EyeOff className="w-4" /> : <Eye className="w-4" />}
+                </span>
+            )}
+            {loading && (
+                <span className="absolute right-3 w-4 flex items-center justify-center text-dark-grey">
+                    <LoaderCircle
+                        className="animate-spin"
+                        size={18}
+                    />
                 </span>
             )}
         </div>

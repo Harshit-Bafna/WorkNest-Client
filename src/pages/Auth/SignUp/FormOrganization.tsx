@@ -2,7 +2,7 @@ import { Input } from '../../../components/ui/Forms/Input'
 import { User, KeyRound, Mail, Building, BookUser, Hexagon, MoveRight, Link2 } from 'lucide-react'
 import { Label } from '../../../components/ui/Forms/Label'
 import { Button } from '../../../components/ui/Button'
-import { useRef, useState, useEffect, FormEvent, FC } from 'react'
+import React, { useRef, useState, useEffect, FormEvent, FC } from 'react'
 import { emailRegex, passwordRegex } from '../../../utils/constants/regex'
 import { Checkbox } from '../../../components/ui/Forms/Checkbox'
 import { cn } from '../../../utils/helper/syncHelper'
@@ -14,6 +14,8 @@ import { registerOrganization } from '../../../store/slices/authSlice'
 import useNavigation from '../../../hooks/useNavigation'
 import path from '../../../Router/path'
 import { Link } from 'react-router-dom'
+import { uploadToAWS } from '../../../store/slices/awsSlice'
+import { UploadFilePayload } from '../../../store/Types/awsTypes'
 
 const FormIndividual: FC = () => {
     const { goTo } = useNavigation()
@@ -23,7 +25,8 @@ const FormIndividual: FC = () => {
 
     const [organizationName, setOrganizationName] = useState('')
     const [registrationNumber, setRegistrationNumber] = useState('')
-    const [logo, setlogo] = useState('')
+    const [logo, setLogo] = useState('')
+    const [logoLoading, setLogoLoading] = useState(false)
     const [websiteUrl, setWebsiteUrl] = useState('')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -37,6 +40,25 @@ const FormIndividual: FC = () => {
             userRef.current.focus()
         }
     }, [])
+    
+    const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {            
+            const formData = new FormData()
+            formData.append('file', file)
+            formData.append('fileName', name)
+            formData.append('folderName', 'Organization_logo')
+
+            const awsPayload: UploadFilePayload = {
+                fileDetails: formData,
+                setLoading: setLogoLoading
+            }
+
+            const response = (await dispatch(uploadToAWS(awsPayload)).unwrap()) as { data: { key: string } }
+            
+            setLogo(response.data.key)
+        }
+    }
 
     const validateAndUpdateFormIndex = (formIndex: number) => {
         if (!organizationName) {
@@ -166,8 +188,8 @@ const FormIndividual: FC = () => {
                             type="file"
                             id="logo"
                             autoComplete="off"
-                            onChange={(e) => setlogo(e.target.value)}
-                            value={logo}
+                            onChange={handleLogoUpload}
+                            loading={logoLoading}
                             placeholder="logo"
                             leftIcon={<Hexagon />}
                         />

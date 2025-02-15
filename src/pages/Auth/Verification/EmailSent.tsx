@@ -2,10 +2,16 @@ import { FC } from 'react'
 import Lottie from 'lottie-react'
 import emailSentAnimation from '../../../assets/auth/emailSent.json'
 import { Button } from '../../../components/ui/Button'
-import { useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
+import path from '../../../Router/path'
 
 const EmailSent: FC = () => {
     const location = useLocation()
+
+    if (!location.state) {
+        return <Navigate to={path.SignUp_Individual} />
+    }
+
     const EmailMessage = location.state.EmailMessage
     const email = location.state.EmailAddress
 
