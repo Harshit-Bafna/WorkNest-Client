@@ -26,6 +26,11 @@ export interface ForgetPasswordPayload {
     emailAddress: string
 }
 
+export interface EmailVerificationPayload {
+    token: string
+    code: string
+}
+
 interface AuthState {
     isLoggedIn: boolean
     data: unknown

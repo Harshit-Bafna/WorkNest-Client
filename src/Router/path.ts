@@ -4,5 +4,6 @@ export default {
     
     SignUp_Individual: '/sign-up/individual',
     SignUp_Organization: '/sign-up/organization',
-    EmailVerificationSent: '/sign-up/email-verification-sent'
+    EmailVerificationSent: '/sign-up/email-verification-sent',
+    Email_Verification: '/confirmation/:token'
 }

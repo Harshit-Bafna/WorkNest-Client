@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { ForgetPasswordPayload, initialState, LoginPayload, RegisterOrganizationPayload, RegisterUserPayload } from '../Types/authTypes'
+import { EmailVerificationPayload, ForgetPasswordPayload, initialState, LoginPayload, RegisterOrganizationPayload, RegisterUserPayload } from '../Types/authTypes'
 import config from '../../data/config'
 import { setError } from './errorSlice'
 import { startLoading, stopLoading } from './loaderSlice'
@@ -97,6 +97,32 @@ export const forgetPassword = createAsyncThunk('auth/forgot-password', async (fo
         thunkAPI.dispatch(startLoading())
 
         const { data }: { data: ApiResponse } = await axios.put(`${serverURL}/${authURL}/forgot-password?emailAddress=${forgetPasswordPayload.emailAddress}`)
+
+        if (!data.success) {
+            thunkAPI.dispatch(setError(data.message))
+            return thunkAPI.rejectWithValue(data.message)
+        }
+
+        return data
+    } catch (error) {
+        const errorMessage =
+            axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : error instanceof Error
+                  ? error.message
+                  : 'Something went wrong'
+        thunkAPI.dispatch(setError(errorMessage))
+        return thunkAPI.rejectWithValue(errorMessage)
+    } finally {
+        thunkAPI.dispatch(stopLoading())
+    }
+})
+
+export const verifyEmail = createAsyncThunk('auth/verify-email', async ({token, code}: EmailVerificationPayload, thunkAPI) => {
+    try {
+        thunkAPI.dispatch(startLoading())
+
+        const { data }: { data: ApiResponse } = await axios.put(`${serverURL}/${authURL}/confirmation/${token}?code=${code}`)
 
         if (!data.success) {
             thunkAPI.dispatch(setError(data.message))

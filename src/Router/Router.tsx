@@ -5,6 +5,7 @@ import RegisterOrganization from '../pages/Auth/SignUp/RegisterOrganization'
 import path from './path'
 import ForgotPassword from '../pages/Auth/SignIn/ForgotPassword'
 import EmailSent from '../pages/Auth/Verification/EmailSent'
+import VerifyEmail from '../pages/Auth/Verification/VerifyEmail'
 
 export const Router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,6 +29,10 @@ export const Router = createBrowserRouter(
             <Route
                 path={path.EmailVerificationSent}
                 element={<EmailSent />}
+            />
+            <Route
+                path={path.Email_Verification}
+                element={<VerifyEmail />}
             />
         </>
     )
