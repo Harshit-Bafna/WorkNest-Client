@@ -5,6 +5,8 @@ import config from '../../data/config'
 import { setError } from './errorSlice'
 import { startLoading, stopLoading } from './loaderSlice'
 import { ApiResponse } from '../Types/ApiTypes'
+import { setSuccess } from './successSlice'
+import successMessage from '../../utils/constants/successMessage'
 
 const serverURL = config.SERVER_URL
 const authURL = 'api/v1/auth'
@@ -72,6 +74,8 @@ export const userLogin = createAsyncThunk('auth/login', async (loginPayload: Log
             thunkAPI.dispatch(setError(data.message))
             return thunkAPI.rejectWithValue(data.message)
         }
+
+        thunkAPI.dispatch(setSuccess(successMessage.User_LoggedIn))
 
         return data
     } catch (error) {

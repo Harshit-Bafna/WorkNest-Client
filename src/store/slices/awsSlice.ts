@@ -83,10 +83,10 @@ export const deleteFile = createAsyncThunk('aws/deleteFile', async ({ key, setLo
     }
 })
 
-const authSlice = createSlice({
+const awsSlice = createSlice({
     name: 'aws',
     initialState: null,
     reducers: {},
 })
 
-export default authSlice.reducer
+export default awsSlice.reducer
