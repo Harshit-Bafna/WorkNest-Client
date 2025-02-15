@@ -1,0 +1,30 @@
+import { FC } from 'react'
+import Lottie from 'lottie-react'
+import emailSentAnimation from '../../../assets/auth/emailSent.json'
+import { Button } from '../../../components/ui/Button'
+import { useLocation } from 'react-router-dom'
+
+const EmailSent: FC = () => {
+    const location = useLocation()
+    const EmailMessage = location.state.EmailMessage
+    const email = location.state.EmailAddress
+
+    return (
+        <main className="flex flex-col items-center justify-center min-h-screen bg-off-white px-4">
+            <Lottie
+                animationData={emailSentAnimation}
+                loop={true}
+                className="h-64 mb-6"
+            />
+            <h1 className="font-poppins font-bold text-3xl text-gray-800 mb-4">Email Sent!</h1>
+            <p className="text-gray-600 text-center mb-6">{EmailMessage}</p>
+            <div className="bg-white shadow-md rounded-lg px-6 py-3 mb-6 border border-teal-400">
+                <p className="text-lg font-semibold text-gray-900">{email}</p>
+            </div>
+            <p className="text-sm text-gray-500 mb-4">Please check your inbox and spam folder.</p>
+            <Button>Resend Email</Button>
+        </main>
+    )
+}
+
+export default EmailSent
