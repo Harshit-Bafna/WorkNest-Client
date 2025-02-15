@@ -9,6 +9,8 @@ import { setError } from '../../../store/slices/errorSlice'
 import { AppDispatch } from '../../../store/store'
 import { userLogin } from '../../../store/slices/authSlice'
 import { LoginPayload } from '../../../store/Types/authTypes'
+import path from '../../../Router/path'
+import { Link } from 'react-router-dom'
 
 const Form: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -89,11 +91,11 @@ const Form: FC = () => {
                     />
                 </div>
                 <div className="forgot-password mt-2 text-right">
-                    <a
-                        href="/"
+                    <Link
+                        to={path.ForgotPassword}
                         className="text-bright-blue font-medium text-sm">
                         Forgot password?
-                    </a>
+                    </Link>
                 </div>
                 <Button
                     type="submit"
@@ -102,11 +104,11 @@ const Form: FC = () => {
                     Sign In
                 </Button>
                 <div className="create-account mt-5 text-center">
-                    <a
-                        href="/"
+                    <Link
+                        to={path.SignUp_Individual}
                         className="text-bright-blue font-medium text-base">
                         Create an account
-                    </a>
+                    </Link>
                 </div>
             </form>
         </div>

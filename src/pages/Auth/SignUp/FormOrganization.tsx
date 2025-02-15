@@ -1,5 +1,5 @@
 import { Input } from '../../../components/ui/Forms/Input'
-import { User, KeyRound, Mail, Building, BookUser, Hexagon, Link, MoveRight } from 'lucide-react'
+import { User, KeyRound, Mail, Building, BookUser, Hexagon, MoveRight, Link2 } from 'lucide-react'
 import { Label } from '../../../components/ui/Forms/Label'
 import { Button } from '../../../components/ui/Button'
 import { useRef, useState, useEffect, FormEvent, FC } from 'react'
@@ -11,8 +11,12 @@ import { setError } from '../../../store/slices/errorSlice'
 import { AppDispatch } from '../../../store/store'
 import { RegisterOrganizationPayload } from '../../../store/Types/authTypes'
 import { registerOrganization } from '../../../store/slices/authSlice'
+import useNavigation from '../../../hooks/useNavigation'
+import path from '../../../Router/path'
+import { Link } from 'react-router-dom'
 
 const FormIndividual: FC = () => {
+    const { goTo } = useNavigation()
     const dispatch = useDispatch<AppDispatch>()
 
     const userRef = useRef<HTMLInputElement | null>(null)
@@ -27,8 +31,6 @@ const FormIndividual: FC = () => {
     const [cPassword, setCPassword] = useState('')
     const [conscent, setConsent] = useState(false)
     const [currentForm, setCurrentForm] = useState(1)
-
-    const [, setSuccess] = useState(false)
 
     useEffect(() => {
         if (userRef.current) {
@@ -105,8 +107,10 @@ const FormIndividual: FC = () => {
             conscent: conscent,
         }
 
-        dispatch(registerOrganization(organizationPayload))
-        setSuccess(true)
+        const response = await dispatch(registerOrganization(organizationPayload))
+        if (response.meta.requestStatus === 'fulfilled') {
+            goTo(path.EmailVerificationSent, { replace: true, state: { EmailMessage: 'We have sent a verification link to', EmailAddress: email } })
+        }
     }
 
     return (
@@ -181,7 +185,7 @@ const FormIndividual: FC = () => {
                             onChange={(e) => setWebsiteUrl(e.target.value)}
                             value={websiteUrl}
                             placeholder="www.organization.com"
-                            leftIcon={<Link />}
+                            leftIcon={<Link2 />}
                         />
                     </div>
                     <Button
@@ -195,7 +199,7 @@ const FormIndividual: FC = () => {
                 <div
                     className={cn(
                         'transition-transform duration-500 ease-in-out',
-                        currentForm === 2 ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 absolute'
+                        currentForm === 2 ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 absolute hidden'
                     )}>
                     <div className="form-field">
                         <Label
@@ -273,11 +277,11 @@ const FormIndividual: FC = () => {
                     </Button>
                 </div>
                 <div className="create-account mt-5 text-center">
-                    <a
-                        href="/"
+                    <Link
+                        to={path.SignIn}
                         className="text-bright-blue font-medium text-base">
                         Sign in to an existing account
-                    </a>
+                    </Link>
                 </div>
             </form>
             <div className="flex justify-center items-center font-inter mt-5 text-light-dark-grey">
@@ -286,6 +290,7 @@ const FormIndividual: FC = () => {
                 <hr className="w-8 border-light-dark-grey ml-2" />
             </div>
             <Button
+                onClick={() => goTo(path.SignUp_Individual)}
                 size={'lg'}
                 className="mt-2"
                 variant={'outline'}>

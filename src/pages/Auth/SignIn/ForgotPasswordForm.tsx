@@ -1,5 +1,5 @@
 import { Input } from '../../../components/ui/Forms/Input'
-import { Mail } from 'lucide-react'
+import { ArrowRight, Mail } from 'lucide-react'
 import { Label } from '../../../components/ui/Forms/Label'
 import { Button } from '../../../components/ui/Button'
 import { useRef, useState, useEffect, FormEvent, FC } from 'react'
@@ -9,6 +9,8 @@ import { setError } from '../../../store/slices/errorSlice'
 import { AppDispatch } from '../../../store/store'
 import { forgetPassword } from '../../../store/slices/authSlice'
 import { ForgetPasswordPayload } from '../../../store/Types/authTypes'
+import path from '../../../Router/path'
+import { Link } from 'react-router-dom'
 
 const ForgotPasswordForm: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -77,6 +79,11 @@ const ForgotPasswordForm: FC = () => {
                     Send
                 </Button>
             </form>
+            <Link
+                to={path.SignIn}
+                className="text-bright-blue flex justify-center items-center mt-4 font-medium text-base">
+                Go back to Sign In <ArrowRight className="w-10 h-5" />
+            </Link>
         </div>
     )
 }

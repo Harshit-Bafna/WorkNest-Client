@@ -10,8 +10,12 @@ import { RegisterUserPayload } from '../../../store/Types/authTypes'
 import { registerUser } from '../../../store/slices/authSlice'
 import { AppDispatch } from '../../../store/store'
 import { Checkbox } from '../../../components/ui/Forms/Checkbox'
+import useNavigation from '../../../hooks/useNavigation'
+import path from '../../../Router/path'
+import { Link } from 'react-router-dom'
 
 const FormIndividual: FC = () => {
+    const { goTo } = useNavigation()
     const dispatch = useDispatch<AppDispatch>()
 
     const userRef = useRef<HTMLInputElement | null>(null)
@@ -21,8 +25,6 @@ const FormIndividual: FC = () => {
     const [password, setPassword] = useState('')
     const [cPassword, setCPassword] = useState('')
     const [conscent, setConsent] = useState(false)
-
-    const [, setSuccess] = useState(false)
 
     useEffect(() => {
         if (userRef.current) {
@@ -83,8 +85,10 @@ const FormIndividual: FC = () => {
             role: 'Admin',
         }
 
-        dispatch(registerUser(registerUserPayload))
-        setSuccess(true)
+        const response = await dispatch(registerUser(registerUserPayload))
+        if (response.meta.requestStatus === 'fulfilled') {
+            goTo(path.EmailVerificationSent, { replace: true, state: { EmailMessage: 'We have sent a verification link to', EmailAddress: email } })
+        }
     }
 
     return (
@@ -166,11 +170,11 @@ const FormIndividual: FC = () => {
                     Sign In
                 </Button>
                 <div className="create-account mt-5 text-center">
-                    <a
-                        href="/"
+                    <Link
+                        to={path.SignIn}
                         className="text-bright-blue font-medium text-base">
                         Sign in to an existing account
-                    </a>
+                    </Link>
                 </div>
             </form>
             <div className="flex justify-center items-center font-inter mt-5 text-light-dark-grey">
@@ -179,6 +183,7 @@ const FormIndividual: FC = () => {
                 <hr className="w-8 border-light-dark-grey ml-2" />
             </div>
             <Button
+                onClick={() => goTo(path.SignUp_Organization)}
                 size={'lg'}
                 className="mt-2"
                 variant={'outline'}>
