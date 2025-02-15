@@ -19,7 +19,6 @@ const ForgotPasswordForm: FC = () => {
 
     const [email, setEmail] = useState('')
 
-    const [, setSuccess] = useState(false)
 
     useEffect(() => {
         if (emailRef.current) {
@@ -47,7 +46,6 @@ const ForgotPasswordForm: FC = () => {
         }
 
         dispatch(forgetPassword(forgetPasswordPayload))
-        setSuccess(true)
     }
 
     return (

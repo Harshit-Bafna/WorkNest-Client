@@ -96,7 +96,7 @@ export const forgetPassword = createAsyncThunk('auth/forgot-password', async (fo
     try {
         thunkAPI.dispatch(startLoading())
 
-        const { data }: { data: ApiResponse } = await axios.post(`${serverURL}/${authURL}/forgot-password`, forgetPasswordPayload)
+        const { data }: { data: ApiResponse } = await axios.put(`${serverURL}/${authURL}/forgot-password?emailAddress=${forgetPasswordPayload.emailAddress}`)
 
         if (!data.success) {
             thunkAPI.dispatch(setError(data.message))
