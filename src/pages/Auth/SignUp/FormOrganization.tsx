@@ -11,14 +11,13 @@ import { setError } from '../../../store/slices/errorSlice'
 import { AppDispatch } from '../../../store/store'
 import { RegisterOrganizationPayload } from '../../../store/Types/authTypes'
 import { registerOrganization } from '../../../store/slices/authSlice'
-import useNavigation from '../../../hooks/useNavigation'
 import path from '../../../Router/path'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { uploadToAWS } from '../../../store/slices/awsSlice'
 import { UploadFilePayload } from '../../../store/Types/awsTypes'
 
 const FormIndividual: FC = () => {
-    const { goTo } = useNavigation()
+    const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
 
     const userRef = useRef<HTMLInputElement | null>(null)
@@ -40,10 +39,10 @@ const FormIndividual: FC = () => {
             userRef.current.focus()
         }
     }, [])
-    
+
     const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
-        if (file) {            
+        if (file) {
             const formData = new FormData()
             formData.append('file', file)
             formData.append('fileName', name)
@@ -51,11 +50,11 @@ const FormIndividual: FC = () => {
 
             const awsPayload: UploadFilePayload = {
                 fileDetails: formData,
-                setLoading: setLogoLoading
+                setLoading: setLogoLoading,
             }
 
             const response = (await dispatch(uploadToAWS(awsPayload)).unwrap()) as { data: { key: string } }
-            
+
             setLogo(response.data.key)
         }
     }
@@ -131,7 +130,10 @@ const FormIndividual: FC = () => {
 
         const response = await dispatch(registerOrganization(organizationPayload))
         if (response.meta.requestStatus === 'fulfilled') {
-            goTo(path.EmailVerificationSent, { replace: true, state: { EmailMessage: 'We have sent a verification link to', EmailAddress: email } })
+            navigate(path.EmailVerificationSent, {
+                replace: true,
+                state: { EmailMessage: 'We have sent a verification link to', EmailAddress: email, IsEmailVerify: true },
+            })
         }
     }
 
@@ -312,7 +314,7 @@ const FormIndividual: FC = () => {
                 <hr className="w-8 border-light-dark-grey ml-2" />
             </div>
             <Button
-                onClick={() => goTo(path.SignUp_Individual)}
+                onClick={() => navigate(path.SignUp_Individual)}
                 size={'lg'}
                 className="mt-2"
                 variant={'outline'}>

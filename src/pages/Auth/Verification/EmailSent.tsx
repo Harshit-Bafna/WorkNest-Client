@@ -4,9 +4,14 @@ import emailSentAnimation from '../../../assets/auth/emailSent.json'
 import { Button } from '../../../components/ui/Button'
 import { Navigate, useLocation } from 'react-router-dom'
 import path from '../../../Router/path'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../../store/store'
+import { forgetPassword, ResendVerifyEmailLink } from '../../../store/slices/authSlice'
+import { ForgetPasswordPayload, ResendEmailVerificationPayload } from '../../../store/Types/authTypes'
 
 const EmailSent: FC = () => {
     const location = useLocation()
+    const dispatch = useDispatch<AppDispatch>()
 
     if (!location.state) {
         return <Navigate to={path.SignUp_Individual} />
@@ -14,6 +19,22 @@ const EmailSent: FC = () => {
 
     const EmailMessage = location.state.EmailMessage
     const email = location.state.EmailAddress
+    const IsEmailVerify = location.state.IsEmailVerify
+    const IsForgotPassword = location.state.IsForgotPassword
+
+    const handleClick = () => {
+        if (IsEmailVerify) {
+            const dispatchPayload: ResendEmailVerificationPayload = {
+                emailAddress: email,
+            }
+            dispatch(ResendVerifyEmailLink(dispatchPayload))
+        } else if (IsForgotPassword) {
+            const dispatchPayload: ForgetPasswordPayload = {
+                emailAddress: email,
+            }
+            dispatch(forgetPassword(dispatchPayload))
+        }
+    }
 
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-off-white px-4">
@@ -28,7 +49,7 @@ const EmailSent: FC = () => {
                 <p className="text-lg font-semibold text-gray-900">{email}</p>
             </div>
             <p className="text-sm text-gray-500 mb-4">Please check your inbox and spam folder.</p>
-            <Button>Resend Email</Button>
+            <Button onClick={handleClick}>Resend Email</Button>
         </main>
     )
 }

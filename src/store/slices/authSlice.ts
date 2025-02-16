@@ -7,6 +7,7 @@ import {
     LoginPayload,
     RegisterOrganizationPayload,
     RegisterUserPayload,
+    ResendEmailVerificationPayload,
     ResetPasswordPayload,
 } from '../Types/authTypes'
 import config from '../../data/config'
@@ -29,7 +30,7 @@ export const registerUser = createAsyncThunk('auth/register', async (userPayload
         if (!data.success) {
             thunkAPI.dispatch(setError(data.message))
             return thunkAPI.rejectWithValue(data.message)
-        }
+        }    
 
         return data
     } catch (error) {
@@ -138,6 +139,36 @@ export const verifyEmail = createAsyncThunk('auth/verify-email', async ({ token,
             thunkAPI.dispatch(setError(data.message))
             return thunkAPI.rejectWithValue(data.message)
         }
+
+        thunkAPI.dispatch(setSuccess(successMessage.Email_Verified))
+
+        return data
+    } catch (error) {
+        const errorMessage =
+            axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : error instanceof Error
+                  ? error.message
+                  : 'Something went wrong'
+        thunkAPI.dispatch(setError(errorMessage))
+        return thunkAPI.rejectWithValue(errorMessage)
+    } finally {
+        thunkAPI.dispatch(stopLoading())
+    }
+})
+
+export const ResendVerifyEmailLink = createAsyncThunk('auth/verify-email', async ({ emailAddress }: ResendEmailVerificationPayload, thunkAPI) => {
+    try {
+        thunkAPI.dispatch(startLoading())
+
+        const { data }: { data: ApiResponse } = await axios.put(`${serverURL}/${authURL}/resend/email-verification?emailAddress=${emailAddress}`)
+
+        if (!data.success) {
+            thunkAPI.dispatch(setError(data.message))
+            return thunkAPI.rejectWithValue(data.message)
+        }
+
+        thunkAPI.dispatch(setSuccess(successMessage.Resend_Email_Verification_Link))
 
         return data
     } catch (error) {

@@ -47,8 +47,11 @@ const ForgotPasswordForm: FC = () => {
 
         const response = await dispatch(forgetPassword(forgetPasswordPayload))
 
-        if(response.meta.requestStatus === 'fulfilled') {
-            navigate(path.EmailVerificationSent, { replace: true, state: { EmailMessage: 'We have sent a password reset link to', EmailAddress: email } })
+        if (response.meta.requestStatus === 'fulfilled') {
+            navigate(path.EmailVerificationSent, {
+                replace: true,
+                state: { EmailMessage: 'We have sent a password reset link to', EmailAddress: email, IsForgotPassword: true },
+            })
         }
     }
 

@@ -10,12 +10,11 @@ import { RegisterUserPayload } from '../../../store/Types/authTypes'
 import { registerUser } from '../../../store/slices/authSlice'
 import { AppDispatch } from '../../../store/store'
 import { Checkbox } from '../../../components/ui/Forms/Checkbox'
-import useNavigation from '../../../hooks/useNavigation'
 import path from '../../../Router/path'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const FormIndividual: FC = () => {
-    const { goTo } = useNavigation()
+    const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
 
     const userRef = useRef<HTMLInputElement | null>(null)
@@ -86,8 +85,16 @@ const FormIndividual: FC = () => {
         }
 
         const response = await dispatch(registerUser(registerUserPayload))
-        if (response.meta.requestStatus === 'fulfilled') {
-            goTo(path.EmailVerificationSent, { replace: true, state: { EmailMessage: 'We have sent a verification link to', EmailAddress: email } })
+
+        if (response.meta.requestStatus === 'fulfilled') {            
+            navigate(path.EmailVerificationSent, {
+                replace: true,
+                state: {
+                    EmailMessage: 'We have sent a verification link to',
+                    EmailAddress: email,
+                    IsEmailVerify: true
+                },
+            })
         }
     }
 
@@ -183,7 +190,7 @@ const FormIndividual: FC = () => {
                 <hr className="w-8 border-light-dark-grey ml-2" />
             </div>
             <Button
-                onClick={() => goTo(path.SignUp_Organization)}
+                onClick={() => navigate(path.SignUp_Organization)}
                 size={'lg'}
                 className="mt-2"
                 variant={'outline'}>

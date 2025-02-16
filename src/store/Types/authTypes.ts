@@ -31,6 +31,10 @@ export interface EmailVerificationPayload {
     code: string
 }
 
+export interface ResendEmailVerificationPayload {
+    emailAddress: string
+}
+
 export interface ResetPasswordPayload {
     token: string
     newPassword: string
