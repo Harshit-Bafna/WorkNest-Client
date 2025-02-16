@@ -174,7 +174,7 @@ const FormIndividual: FC = () => {
                     type="submit"
                     className="mt-2"
                     size={'lg'}>
-                    Sign In
+                    Sign Up
                 </Button>
                 <div className="create-account mt-5 text-center">
                     <Link
