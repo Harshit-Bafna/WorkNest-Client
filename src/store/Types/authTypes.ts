@@ -31,6 +31,11 @@ export interface EmailVerificationPayload {
     code: string
 }
 
+export interface ResetPasswordPayload {
+    token: string
+    newPassword: string
+}
+
 interface AuthState {
     isLoggedIn: boolean
     data: unknown

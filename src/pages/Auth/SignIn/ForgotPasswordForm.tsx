@@ -10,15 +10,15 @@ import { AppDispatch } from '../../../store/store'
 import { forgetPassword } from '../../../store/slices/authSlice'
 import { ForgetPasswordPayload } from '../../../store/Types/authTypes'
 import path from '../../../Router/path'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const ForgotPasswordForm: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
+    const navigate = useNavigate()
 
     const emailRef = useRef<HTMLInputElement | null>(null)
 
     const [email, setEmail] = useState('')
-
 
     useEffect(() => {
         if (emailRef.current) {
@@ -45,7 +45,11 @@ const ForgotPasswordForm: FC = () => {
             emailAddress: email,
         }
 
-        dispatch(forgetPassword(forgetPasswordPayload))
+        const response = await dispatch(forgetPassword(forgetPasswordPayload))
+
+        if(response.meta.requestStatus === 'fulfilled') {
+            navigate(path.EmailVerificationSent, { replace: true, state: { EmailMessage: 'We have sent a password reset link to', EmailAddress: email } })
+        }
     }
 
     return (

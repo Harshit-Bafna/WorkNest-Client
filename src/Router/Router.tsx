@@ -6,6 +6,7 @@ import path from './path'
 import ForgotPassword from '../pages/Auth/SignIn/ForgotPassword'
 import EmailSent from '../pages/Auth/Verification/EmailSent'
 import VerifyEmail from '../pages/Auth/Verification/VerifyEmail'
+import ResetPassword from '../pages/Auth/SignIn/ResetPassword'
 
 export const Router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,6 +26,10 @@ export const Router = createBrowserRouter(
             <Route
                 path={path.ForgotPassword}
                 element={<ForgotPassword />}
+            />
+            <Route
+                path={path.ResetPassword}
+                element={<ResetPassword />}
             />
             <Route
                 path={path.EmailVerificationSent}
