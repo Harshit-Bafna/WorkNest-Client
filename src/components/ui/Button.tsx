@@ -1,24 +1,31 @@
 import * as React from 'react'
-import { VariantProps, cva } from 'class-variance-authority'
+import { VariantProps } from 'class-variance-authority'
 import { cn } from '../../utils/helper/syncHelper'
+import { cva } from 'class-variance-authority'
 
-const buttonVariants = cva('inline-flex items-center justify-center rounded-md text-md font-medium transition-all', {
-    variants: {
-        variant: {
-            default: 'bg-bright-blue text-[var(--color-white)] hover:text-bright-blue hover:bg-transparent border-2 border-bright-blue',
-            outline: 'text-bright-blue bg-transparent border-2 border-bright-blue hover:bg-bright-blue hover:text-[var(--color-white)] ',
+const buttonVariants = cva(
+    'inline-flex items-center justify-center rounded-md font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+    {
+        variants: {
+            variant: {
+                default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+                ghost: 'hover:bg-accent hover:text-accent-foreground',
+                solid: 'bg-bright-blue text-white hover:bg-blue-600',
+                outline: 'text-bright-blue bg-transparent border-2 border-bright-blue hover:bg-bright-blue hover:text-white',
+            },
+            size: {
+                default: 'h-10 px-4 py-2',
+                icon: 'h-10 w-10',
+                sm: 'h-fit px-5 py-2 rounded-sm',
+                lg: 'h-11 w-full rounded-xl',
+            },
         },
-        size: {
-            default: 'h-10 py-2 px-14 rounded-lg',
-            sm: 'h-9 px-5 rounded-sm',
-            lg: 'h-11 w-full rounded-xl',
+        defaultVariants: {
+            variant: 'default',
+            size: 'default',
         },
-    },
-    defaultVariants: {
-        variant: 'default',
-        size: 'default',
-    },
-})
+    }
+)
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     href?: string
@@ -43,4 +50,5 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ classN
         </button>
     )
 })
+
 Button.displayName = 'Button'
