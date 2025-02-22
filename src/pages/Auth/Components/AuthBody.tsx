@@ -1,6 +1,6 @@
 import React from 'react'
 import LeftContainer from './LeftContainer'
-import Logo from '../../../components/Logo/Logo'
+import Logo from '../../../components/ui/Logo/Logo'
 
 interface AuthBodyProps {
     CustomComponent?: React.ComponentType

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { cn } from '../../utils/helper/syncHelper'
+import { cn } from '../../../utils/helper/syncHelper'
 import { cva, VariantProps } from 'class-variance-authority'
 
 const logoVariants = cva('inline-flex items-center justify-center drop-shadow-text-shadow', {
