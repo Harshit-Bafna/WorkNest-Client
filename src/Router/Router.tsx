@@ -7,6 +7,8 @@ import ForgotPassword from '../pages/Auth/SignIn/ForgotPassword'
 import EmailSent from '../pages/Auth/Verification/EmailSent'
 import VerifyEmail from '../pages/Auth/Verification/VerifyEmail'
 import ResetPassword from '../pages/Auth/SignIn/ResetPassword'
+import RootLayout from './Layout/RootLayout'
+import Dashboard from '../pages/Dashboard/Dashboard'
 
 export const Router = createBrowserRouter(
     createRoutesFromElements(
@@ -39,6 +41,15 @@ export const Router = createBrowserRouter(
                 path={path.Email_Verification}
                 element={<VerifyEmail />}
             />
+
+            <Route
+                path="/"
+                element={<RootLayout />}>
+                <Route
+                    index
+                    element={<Dashboard />}
+                />
+            </Route>
         </>
     )
 )
