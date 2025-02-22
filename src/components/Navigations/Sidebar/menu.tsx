@@ -29,7 +29,7 @@ export const menu: MenuItem[] = [
     },
     {
         title: 'Notifications',
-        path: path.Analytics,
+        path: path.Notifications,
         icon: <Bell size={20} />,
     },
 
