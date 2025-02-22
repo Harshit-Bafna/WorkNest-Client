@@ -18,6 +18,7 @@ export default {
         'gray-muted': '#94a3b8',
         'vibrant-green': '#4CAF50',
         'orange': '#f97316',
+        "red": '#dc2626'
       },
       dropShadow: {
         'text-shadow': '0px 4px 4px rgba(0, 0, 0, 0.25)',
