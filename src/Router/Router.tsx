@@ -9,6 +9,7 @@ import VerifyEmail from '../pages/Auth/Verification/VerifyEmail'
 import ResetPassword from '../pages/Auth/SignIn/ResetPassword'
 import RootLayout from './Layout/RootLayout'
 import Dashboard from '../pages/Dashboard/Dashboard'
+import Notification from '../pages/Notifications/NotificationPage'
 
 export const Router = createBrowserRouter(
     createRoutesFromElements(
@@ -48,6 +49,10 @@ export const Router = createBrowserRouter(
                 <Route
                     index
                     element={<Dashboard />}
+                />
+                <Route
+                    path={path.Notifications}
+                    element={<Notification />}
                 />
             </Route>
         </>

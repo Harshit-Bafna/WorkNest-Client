@@ -1,36 +1,3 @@
-// import { useState } from 'react'
-// import { Outlet } from 'react-router-dom'
-// import Navbar from '../../components/Navigations/Navbar/Navbar'
-// import Sidebar from '../../components/Navigations/Sidebar/Sidebar'
-
-// const RootLayout = () => {
-//     const [collapse, setCollapse] = useState(false)
-
-//     return (
-//         <div className="flex h-screen overflow-hidden">
-//             <Sidebar
-//                 collapse={collapse}
-//                 setCollapse={setCollapse}
-//             />
-
-//             <div
-//                 className={`fixed inset-0 z-30 bg-gray-900 transition-opacity duration-300 ${collapse ? 'opacity-50 z-30' : 'opacity-0 pointer-events-none'}`}></div>
-
-//             <div className="flex flex-col flex-1">
-//                 <Navbar />
-
-//                 <div className="overflow-auto bg-light-gray flex-1 ml-20 md:ml-60">
-//                     <Outlet />
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default RootLayout
-
-'use client'
-
 import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from '../../components/Navigations/Navbar/Navbar'
@@ -70,7 +37,7 @@ const RootLayout = () => {
             <div className={`flex flex-col flex-1`}>
                 <Navbar />
 
-                <div className={`overflow-auto bg-light-gray flex-1 ${isMobile ? 'ml-16' : collapse ? 'ml-16' : 'ml-60'} transition-all duration-300`}>
+                <div className={`overflow-auto bg-light-gray flex-1 p-5 sm:p-8 md:px-10 lg:px-14 ${isMobile ? 'ml-16' : collapse ? 'ml-16' : 'ml-60'} transition-all duration-300`}>
                     <Outlet />
                 </div>
             </div>
