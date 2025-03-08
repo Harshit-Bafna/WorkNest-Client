@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "lint:check": "eslint",
+    "dev": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production tsc -b && vite build",
+    "preview": "cross-env NODE_ENV=development vite preview",
+    "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format:check": "prettier \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\" --check",
-    "format:fix": "prettier \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\" --write",
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --fix",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -20,6 +20,7 @@
     ]
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
