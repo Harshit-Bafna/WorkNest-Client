@@ -11,15 +11,15 @@ const Home = () => {
     return (
         <>
             <Navbar />
-            <Hero />
+            <div id='home'><Hero /></div>
             <Brand />
-            <Features />
-            <Pricing />
-            <Testimonials />
+            <div id="features"><Features /></div>
+            <div id="pricing"><Pricing /></div>
+            <div id="testimonials"><Testimonials /></div>
             <CallToAction />
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

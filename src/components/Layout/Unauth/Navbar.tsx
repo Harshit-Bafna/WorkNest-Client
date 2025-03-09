@@ -1,4 +1,5 @@
 import { AlignRight, ArrowRight } from 'lucide-react'
+import { Link as ScrollLink } from 'react-scroll' 
 import logo from '@/assets/logo.png'
 import { Button } from '@/components/ui/Button'
 
@@ -14,23 +15,47 @@ const Navbar = () => {
             </div>
             <div className="py-3 px-5 sm:px-10 md:px-20">
                 <div className="flex items-center justify-between">
-                    <div className='flex items-center justify-start gap-2'>
+                    <div className="flex items-center justify-start gap-2">
                         <img
                             src={logo}
                             alt="worknest"
                             height={40}
                             width={40}
                         />
-                        <p className='bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text font-bold text-lg'>
-                            <span className='text-2xl'>W</span>ORK<span className='text-2xl'>N</span>EST
+                        <p className="bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text font-bold text-lg">
+                            <span className="text-2xl">W</span>ORK<span className="text-2xl">N</span>EST
                         </p>
                     </div>
                     <AlignRight className="md:hidden" />
                     <nav className="hidden md:flex items-center gap-6 text-secondary/60 font-poppins">
-                        <a href="/">Home</a>
-                        <a href="/">Features</a>
-                        <a href="/">Pricing</a>
-                        <a href="/">Testimonials</a>
+                        <ScrollLink
+                            to="home"
+                            smooth={true}
+                            duration={500}
+                            className="cursor-pointer">
+                            Home
+                        </ScrollLink>
+                        <ScrollLink
+                            to="features"
+                            smooth={true}
+                            duration={500}
+                            className="cursor-pointer">
+                            Features
+                        </ScrollLink>
+                        <ScrollLink
+                            to="pricing"
+                            smooth={true}
+                            duration={500}
+                            className="cursor-pointer">
+                            Pricing
+                        </ScrollLink>
+                        <ScrollLink
+                            to="testimonials"
+                            smooth={true}
+                            duration={500}
+                            className="cursor-pointer">
+                            Testimonials
+                        </ScrollLink>
                         <Button>Get For free</Button>
                     </nav>
                 </div>
