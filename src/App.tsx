@@ -1,5 +1,7 @@
+import Home from '@/pages/Home/Home'
+
 function App() {
-    return <div className="text-4xl">Hello world</div>
+    return <Home />
 }
 
 export default App
