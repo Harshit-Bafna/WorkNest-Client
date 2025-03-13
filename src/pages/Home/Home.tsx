@@ -19,7 +19,7 @@ const Home = () => {
             <CallToAction />
             <Footer />
         </>
-    );
+    )
 };
 
 export default Home;
