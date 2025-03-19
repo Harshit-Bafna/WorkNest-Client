@@ -58,7 +58,6 @@ export default tseslint.config(
       'react/jsx-key': 'error', // Enforce keys in list rendering
       'react/jsx-no-duplicate-props': 'error', // No duplicate props in JSX
       'react/jsx-no-useless-fragment': 'warn', // Avoid unnecessary fragments
-      'react/no-array-index-key': 'warn', // Avoid using array index as key
       'react/jsx-pascal-case': 'error', // Enforce PascalCase for component names
 
       // Hooks rules
