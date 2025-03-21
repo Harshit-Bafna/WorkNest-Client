@@ -1,23 +1,18 @@
 import { useState, useRef, useEffect } from 'react'
 import { AlignRight, ArrowRight, X } from 'lucide-react'
 import { Link as ScrollLink } from 'react-scroll'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import logo from '@/assets/logo.png'
 import { Button } from '@/components/ui/Button'
-
-interface NavItem {
-    to: string
-    label: string
-}
-
-const navItems: NavItem[] = [
-    { to: 'home', label: 'Home' },
-    { to: 'features', label: 'Features' },
-    { to: 'pricing', label: 'Pricing' },
-    { to: 'testimonials', label: 'Testimonials' },
-]
+import { useNavigate } from 'react-router-dom'
+import path from '@/router/path'
+import { navItems } from '@/router/unauthNavItems'
+import { arrorVariants } from '@/lib/utils/animations'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
+    const navigate = useNavigate()
+
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [activeSection, setActiveSection] = useState<string>('home')
     const menuRef = useRef<HTMLDivElement>(null)
@@ -50,8 +45,17 @@ const Navbar = () => {
             <div className="flex items-center justify-center py-3 bg-secondary text-neutral text-sm font-montserrat gap-2">
                 <div className="inline-flex gap-1 items-center">
                     <p className="hidden md:inline-flex text-neutral/70 mr-3">Streamline your workflow and boost your performance</p>
-                    <p>Get started for free</p>
-                    <ArrowRight size={16} />
+                    <Link
+                        to={path.signUp}
+                        className="flex items-center gap-2 hover:underline">
+                        <p>Get started for free</p>
+                        <motion.span
+                            initial="initial"
+                            whileHover="hover"
+                            variants={arrorVariants}>
+                            <ArrowRight size={16} />
+                        </motion.span>
+                    </Link>
                 </div>
             </div>
             <div className="py-3 px-5 sm:px-10 md:px-20">
@@ -67,14 +71,16 @@ const Navbar = () => {
                             <span className="text-2xl">W</span>ORK<span className="text-2xl">N</span>EST
                         </p>
                     </div>
-                    <div className="relative md:hidden">
+                    <div className="relative lg:hidden">
                         <Button
                             ref={buttonRef}
                             variant="ghostSecondary"
                             onClick={toggleMenu}
                             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
                             className="relative">
-                            <AnimatePresence initial={false} mode="wait">
+                            <AnimatePresence
+                                initial={false}
+                                mode="wait">
                                 {isMenuOpen ? (
                                     <motion.div
                                         key="close"
@@ -125,7 +131,10 @@ const Navbar = () => {
                                         </Button>
                                     ))}
                                     <div className="px-3 py-3">
-                                        <Button className="w-full" variant="secondary">
+                                        <Button
+                                            onClick={() => navigate(path.signUp)}
+                                            className="w-full"
+                                            variant="secondary">
                                             Get For Free
                                         </Button>
                                     </div>
@@ -133,7 +142,7 @@ const Navbar = () => {
                             )}
                         </AnimatePresence>
                     </div>
-                    <nav className="hidden md:flex items-center gap-6 text-secondary/60 font-poppins">
+                    <nav className="hidden lg:flex items-center gap-6 text-secondary/60 font-poppins">
                         {navItems.map((item) => (
                             <ScrollLink
                                 key={item.to}
@@ -148,7 +157,11 @@ const Navbar = () => {
                                 {item.label}
                             </ScrollLink>
                         ))}
-                        <Button variant="secondary">Get For Free</Button>
+                        <Button
+                            onClick={() => navigate(path.signUp)}
+                            variant="secondary">
+                            Get For Free
+                        </Button>
                     </nav>
                 </div>
             </div>
