@@ -48,7 +48,7 @@ export default tseslint.config(
       // General JavaScript rules
       'no-console': 'error', // No console log allowed
       'no-debugger': 'error', // Disallow debugger in production
-      'no-unused-vars': 'error', // No unused variables allowed
+      'no-unused-vars': ['error', { "argsIgnorePattern": "^_" }], // No unused variables allowed
       'quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }], // Consistent quote usage
       'prefer-const': 'error', // Prefer const where possible
       'eqeqeq': ['error', 'always'], // Enforce strict equality
