@@ -54,7 +54,7 @@ const VerifyEmail = ({ verifyEmail, successNavigation, errorNavigations }: Verif
 
         if (success) {
             const redirectTimeout = setTimeout(() => {
-                navigate(successNavigation)
+                navigate(successNavigation, { replace: true })
             }, 3000)
 
             return () => clearTimeout(redirectTimeout)

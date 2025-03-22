@@ -1,15 +1,17 @@
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import EmailSent from '@/components/Verification/EmailSent'
+import { OtpType } from '@/lib/constants'
 import { containerVariants, itemVariants } from '@/lib/utils/animations'
 import { validateEmail } from '@/lib/utils/helper/syncHelper'
 import path from '@/router/path'
 import { ArrowLeft, Mail, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const ForgotPasswordRequest = () => {
+    const navigate = useNavigate()
+
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
     const [success, setSuccess] = useState(false)
@@ -26,15 +28,13 @@ const ForgotPasswordRequest = () => {
         }
 
         setSuccess(true)
+
+        if (success) {
+            navigate(`${path.otp}/${OtpType.ResetPassword}`, { state: { email: email } })
+        }
     }
 
-    return success ? (
-        <EmailSent
-            email={email}
-            title="Check Your Email"
-            description="We've sent a password reset link to your email address."
-        />
-    ) : (
+    return (
         <div className="min-h-screen min-w-screen w-full h-full bg-gradient-to-r from-primary-light/10 to-muted/10 overflow-x-clip flex items-start sm:items-center justify-center">
             <div className="max-w-md h-full py-15 mx-5">
                 <motion.div

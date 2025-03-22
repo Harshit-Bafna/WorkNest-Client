@@ -7,6 +7,7 @@ import VerifyEmailLink from '@/pages/Authentication/VerifyEmailLink'
 import Home from '@/pages/Home/Home'
 import path from '@/router/path'
 import { Route } from 'react-router-dom'
+import OtpInput from '@/pages/Authentication/OtpInput'
 
 const UnauthRouter = (
     <>
@@ -26,7 +27,7 @@ const UnauthRouter = (
         />
 
         <Route
-            path={path.emailVerifyLink}
+            path={`${path.emailVerifyLink}/:token`}
             element={<VerifyEmailLink />}
         />
 
@@ -36,13 +37,18 @@ const UnauthRouter = (
         />
 
         <Route
-            path={path.resetLinkVerify}
+            path={`${path.resetLinkVerify}/:token`}
             element={<VerifyResetLink />}
         />
 
         <Route
             path={path.resetPassword}
             element={<ResetPassword />}
+        />
+
+        <Route
+            path={`${path.otp}/:otpType`}
+            element={<OtpInput />}
         />
     </>
 )

@@ -3,10 +3,11 @@ export default {
     contactUs: '/contact-us',
     signIn: '/sign-in',
     signUp: '/sign-up',
-    emailVerifyLink: '/emailAddress/verify/:token',
+    otp: '/otp',
+    emailVerifyLink: '/emailAddress/verify',
     forgotPassword: '/forgot-password',
     resetPassword: '/resetPassword',
-    resetLinkVerify: '/reset-password/verify/:token',
+    resetLinkVerify: '/reset-password/verify',
 
     dashboard: '/'
 }

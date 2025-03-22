@@ -14,6 +14,7 @@ import { containerVariants, itemVariants } from '@/lib/utils/animations'
 import { validateEmail, validatePassword } from '@/lib/utils/helper/syncHelper'
 import path from '@/router/path'
 import { Link, useNavigate } from 'react-router-dom'
+import { OtpType } from '@/lib/constants'
 
 const features = [
     {
@@ -89,8 +90,8 @@ const SignIn = () => {
 
         setSuccess(true)
 
-        if(success) {
-            navigate(path.dashboard)
+        if (success) {
+            navigate(`${path.otp}/${OtpType.SignIn}`, { state: { email: email } })
         }
     }
 

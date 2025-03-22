@@ -12,8 +12,9 @@ import { InfoCard } from './components/InfoCard'
 import { SocialLoginButton } from './components/SocialLoginButton'
 import { containerVariants, itemVariants } from '@/lib/utils/animations'
 import { validateConfirmPassword, validateEmail, validateName, validatePassword } from '@/lib/utils/helper/syncHelper'
-import EmailSent from '@/components/Verification/EmailSent'
 import path from '@/router/path'
+import { useNavigate } from 'react-router-dom'
+import { OtpType } from '@/lib/constants'
 
 const features = [
     {
@@ -64,6 +65,8 @@ const socialLogin = [
 ]
 
 const SignUp = () => {
+    const navigate = useNavigate()
+
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -95,15 +98,13 @@ const SignUp = () => {
         }
 
         setSuccess(true)
+
+        if (success) {
+            navigate(`${path.otp}/${OtpType.Email}`, { state: { email: email } })
+        }
     }
 
-    return success ? (
-        <EmailSent
-            email={email}
-            title="Check Your Email"
-            description="We've sent a verification link to your email address."
-        />
-    ) : (
+    return (
         <div className="min-h-screen max-w-screen w-full h-full bg-gradient-to-r from-primary-light/10 to-muted/10 overflow-x-clip">
             <div className="flex flex-col md:flex-row gap-5 md:gap-10 lg:gap-8 min-h-screen min-w-screen w-full h-full py-10 px-5 sm:px-10 md:px-20 lg:px-24">
                 <motion.div
