@@ -53,8 +53,10 @@ const OtpInput = () => {
         async (otp: string, userId: string | null) => {
             if (otpType === OtpType.ResetPassword) {
                 navigate(`${path.resetLinkVerify}/${userId}?code=${otp}`, { replace: true })
-            } else if (otpType === OtpType.Email || otpType === OtpType.SignIn) {
+            } else if (otpType === OtpType.Email ) {
                 navigate(`${path.emailVerifyLink}/${userId}?code=${otp}`, { replace: true })
+            } else if (otpType === OtpType.SignIn) {
+                navigate(`${path.emailVerifyLink}/${userId}?code=${otp}?signIn=true`, { replace: true })
             }
         },
         [navigate, otpType]

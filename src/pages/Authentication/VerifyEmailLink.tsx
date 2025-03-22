@@ -13,15 +13,14 @@ const VerifyEmailLink = () => {
     const { token = '' } = useParams<{ token: string }>()
     const [searchParams] = useSearchParams()
     const code = searchParams.get('code') as string
+    const signIn = searchParams.get('signIn') === 'true'
 
     return (
         <div>
             <VerifyEmail
                 verifyEmail={() => verifyEmail(code, token)}
-                successNavigation={path.signIn}
-                errorNavigations={[
-                    { text: 'Go to Home', path: path.home },
-                ]}
+                successNavigation={signIn ? path.dashboard : path.signIn}
+                errorNavigations={[{ text: 'Go to Home', path: path.home }]}
             />
         </div>
     )
