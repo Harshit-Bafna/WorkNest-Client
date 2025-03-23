@@ -56,3 +56,22 @@ export const validateConfirmPassword = (password: string, confirmPassword: strin
     }
     return ''
 }
+
+export const handleShortcut = (e: KeyboardEvent, shortcuts: { keys: string; callback: () => void }[]) => {
+    shortcuts.forEach(({ keys, callback }) => {
+        const keyCombination = keys.split('+').map((key) => key.trim().toLowerCase())
+
+        const isShortcutPressed = keyCombination.every((key) => {
+            if (key === '⌘' || key === 'cmd') return e.metaKey
+            if (key === 'ctrl') return e.ctrlKey
+            if (key === 'alt') return e.altKey
+            if (key === 'shift') return e.shiftKey
+            return e.key.toLowerCase() === key
+        })
+
+        if (isShortcutPressed) {
+            e.preventDefault()
+            callback()
+        }
+    })
+}
