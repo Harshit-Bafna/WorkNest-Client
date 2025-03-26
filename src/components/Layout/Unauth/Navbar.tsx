@@ -6,7 +6,7 @@ import logo from '@/assets/logo.png'
 import { Button } from '@/components/ui/Button'
 import { useNavigate } from 'react-router-dom'
 import path from '@/router/path'
-import { navItems } from '@/router/unauthNavItems'
+import { navItems } from '@/router/Routes/unauthNavItems'
 import { arrorVariants } from '@/lib/utils/animations'
 import { Link } from 'react-router-dom'
 

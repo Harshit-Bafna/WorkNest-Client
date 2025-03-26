@@ -75,3 +75,11 @@ export const handleShortcut = (e: KeyboardEvent, shortcuts: { keys: string; call
         }
     })
 }
+
+export const getUserInitials = (name: string) => {
+    return name
+        .split(' ')
+        .map((part) => part[0])
+        .join('')
+        .toUpperCase()
+}

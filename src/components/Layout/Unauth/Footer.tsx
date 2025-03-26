@@ -5,7 +5,7 @@ import SocialPin from '@/assets/Home/Social/social-pin.svg'
 import SocialX from '@/assets/Home/Social/social-x.svg'
 import SocialYoutube from '@/assets/Home/Social/social-youtube.svg'
 import { Link as ScrollLink } from 'react-scroll'
-import { navItems } from '@/router/unauthNavItems'
+import { navItems } from '@/router/Routes/unauthNavItems'
 
 const Footer = () => {
     return (

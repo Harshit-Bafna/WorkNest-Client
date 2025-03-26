@@ -9,5 +9,18 @@ export default {
     resetPassword: '/resetPassword',
     resetLinkVerify: '/reset-password/verify',
 
-    dashboard: '/'
+    dashboard: '/',
+    allProject: '/allProjects',
+    addProject: '/addProject',
+    taskList: '/task/list',
+    taskBoard: '/task/board',
+    taskCalendar: '/task/calendar',
+    teams: '/teams',
+    analaytics: '/analytics',
+    notifications: '/notifications',
+    subscription: '/subscription',
+    settings: '/settings',
+    support: '/support',
+    profile: '/profile',
+    logout: '/logout',
 }

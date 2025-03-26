@@ -34,6 +34,13 @@ export const listVariants = {
     }),
 }
 
+export const listHoverVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    hover: { x: 2 },
+    transition: { type: 'spring', stiffness: 400, damping: 10 },
+}
+
 export const pulseVariants = {
     initial: { scale: 0.95, opacity: 0.5 },
     animate: {
