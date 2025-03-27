@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { listHoverVariants } from '@/lib/utils/animations'
 import { ChevronUp } from 'lucide-react'
+import useWindowSize from '@/lib/hooks/useWindowSize'
 
 const SidebarMenuItem = ({ navItem, key, collapse }: { navItem: NavItem; key: number; collapse: boolean }) => {
     const [showTooltip, setShowTooltip] = useState(false)
@@ -118,9 +119,21 @@ const SidebarMenuItem = ({ navItem, key, collapse }: { navItem: NavItem; key: nu
 }
 
 const Sidebar = ({ collapse }: { collapse: boolean }) => {
+    const { width } = useWindowSize()
+    const sidebarWidth = collapse ? (width > 640 ? '4rem' : '0rem') : '13rem'
+
     return (
-        <div
-            className={`bg-neutral z-35 fixed flex flex-col justify-between top-0 h-screen left-0 pt-21 pb-8 border-r border-dark-muted/10 ${collapse ? 'w-0 sm:w-16 overflow-x-hidden sm:overflow-visible' : 'shadow-lg lg:shadow-none w-50'}`}>
+        <motion.div
+            layout
+            initial={{ width: sidebarWidth }}
+            animate={{ width: sidebarWidth }}
+            transition={{
+                duration: 0.3,
+                ease: [0.25, 0.1, 0.25, 1.0],
+                layout: { duration: 2000 },
+            }}
+            className={`bg-neutral z-35 fixed flex flex-col justify-between top-0 h-screen left-0 pt-21 pb-8 border-r border-dark-muted/10 
+            ${collapse ? 'w-0 sm:w-16 overflow-x-hidden sm:overflow-visible' : 'shadow-lg lg:shadow-none w-50'}`}>
             <div className={`${collapse ? 'space-y-2' : 'space-y-1 overflow-y-auto'} px-3`}>
                 {navItems.mainMenu.map((navItem, index) => (
                     <SidebarMenuItem
@@ -139,7 +152,7 @@ const Sidebar = ({ collapse }: { collapse: boolean }) => {
                     />
                 ))}
             </div>
-        </div>
+        </motion.div>
     )
 }
 
