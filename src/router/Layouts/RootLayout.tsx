@@ -12,10 +12,10 @@ const RootLayout = () => {
                 collapse={collapse}
                 setCollapse={setCollapse}
             />
-            <div className="flex w-screen">
+            <div className="flex w-screen relative">
                 <Sidebar collapse={collapse} />
                 <div
-                    className={`relative bg-primary-light/5 h-full w-full flex-1 overflow-x-hidden px-7 my-5 ${collapse ? 'ml-0 sm:ml-16' : 'ml-16 lg:ml-50'}`}>
+                    className={`relative h-full w-full flex-1 overflow-x-hidden px-7 my-5 ${collapse ? 'ml-0 sm:ml-16' : 'ml-16 lg:ml-50'}`}>
                     <Outlet />
                 </div>
             </div>

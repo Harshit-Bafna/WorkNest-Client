@@ -75,7 +75,7 @@ const Navbar = ({ collapse, setCollapse }: NavbarProps) => {
                 <div className="max-w-6 w-full">
                     <Button
                         variant={'ghostSecondary'}
-                        className="py-1 px-0 m-0 w-fit h-fit rounded-lg outline-none border-none"
+                        className="py-1 px-0 m-0 w-fit h-fit rounded-lg outline-none border-none hover:bg-transparent"
                         onClick={() => setCollapse(!collapse)}>
                         <motion.div
                             initial={{ rotate: 0 }}
