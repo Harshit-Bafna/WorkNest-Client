@@ -6,7 +6,7 @@ import { motion } from 'motion/react'
 import { Link as ScrollLink } from 'react-scroll'
 import path from '@/router/path'
 import { useNavigate } from 'react-router-dom'
-import { arrorVariants } from '@/lib/utils/animations'
+import { arrowVariants } from '@/lib/utils/animations'
 
 const CallToAction = () => {
     const navigate = useNavigate()
@@ -48,7 +48,7 @@ const CallToAction = () => {
                             <motion.span
                                 initial="initial"
                                 whileHover="hover"
-                                variants={arrorVariants}>
+                                variants={arrowVariants}>
                                 <ArrowRight size={18} />
                             </motion.span>
                         </Button>

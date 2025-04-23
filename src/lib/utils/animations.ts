@@ -68,8 +68,20 @@ export const floatVariants = {
     },
 }
 
-export const arrorVariants = {
+export const arrowVariants = {
     initial: { x: 0 },
     hover: { x: 5 },
     transition: { type: 'spring', stiffness: 400, damping: 10 },
+}
+
+export const layoutVariants = {
+    initial: { opacity: 0 },
+    animate: {
+        opacity: 1,
+        transition: { duration: 0.5 },
+    },
+    exit: {
+        opacity: 0,
+        transition: { duration: 0.3 },
+    },
 }
